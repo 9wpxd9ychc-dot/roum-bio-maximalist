@@ -34,7 +34,15 @@ function App() {
       <div className="hero-meta"><span>INDEPENDENT CREATOR / DIGITAL BUILDER</span><span>EUROPE · ONLINE</span></div>
       <div className="hero-copy">
         <div className="profile-avatar-wrap">
-          <img className="profile-avatar" src="/avatar.png" alt="Roum avatar" onError={(event) => { event.currentTarget.style.display = 'none'; }} />
+          <img className="profile-avatar" src="/avatar.jpg" alt="Roum avatar" onError={(event) => {
+            const img = event.currentTarget;
+            if (img.dataset.fallback !== 'true') {
+              img.dataset.fallback = 'true';
+              img.src = '/avatar.png';
+            } else {
+              img.style.display = 'none';
+            }
+          }} />
           <span className="profile-avatar-caption">YOUR AVATAR / 01</span>
         </div>
         <p className="eyebrow"><span className="lime">✳</span> PERSONAL SPACE — 2026</p>
