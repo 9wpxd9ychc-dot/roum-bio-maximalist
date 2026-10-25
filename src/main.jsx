@@ -33,6 +33,10 @@ function App() {
     <section className="hero" id="top">
       <div className="hero-meta"><span>INDEPENDENT CREATOR / DIGITAL BUILDER</span><span>EUROPE · ONLINE</span></div>
       <div className="hero-copy">
+        <div className="profile-avatar-wrap">
+          <img className="profile-avatar" src="/avatar.png" alt="Roum avatar" onError={(event) => { event.currentTarget.style.display = 'none'; }} />
+          <span className="profile-avatar-caption">YOUR AVATAR / 01</span>
+        </div>
         <p className="eyebrow"><span className="lime">✳</span> PERSONAL SPACE — 2026</p>
         <h1>IDEAS INTO<br/><span className="outline">REAL</span> THINGS<span className="lime">.</span></h1>
         <div className="hero-bottom"><p>Building bots, websites<br/>and digital experiments.</p><a className="round-link" href="#projects" aria-label="Explore projects">↘</a></div>
