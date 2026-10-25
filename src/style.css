@@ -55,3 +55,62 @@ footer>a:last-child{color:#b9bec1}
 @keyframes rain-drift{from{background-position:0 0}to{background-position:90px 300px}}
 @media(max-width:760px){.profile-avatar{width:64px;height:64px}.orb-wrap{opacity:.16}.hero{background:radial-gradient(ellipse at 80% 25%,#c2c8ce18,transparent 45%),linear-gradient(180deg,#0a0b0d,#111315 70%,#090a0b)}.ticker-track span{font-size:12px}}
 @media(prefers-reduced-motion:reduce){body:before{animation:none}}
+
+
+/* PERFORMANCE: low-end phones, tablets and desktop */
+html{scroll-behavior:smooth}
+img{max-width:100%}
+@media (hover:none), (pointer:coarse){
+  html{scroll-behavior:auto}
+  body:before{animation:none;opacity:.045;background-size:80px 160px}
+  body:after{display:none}
+  .topbar{backdrop-filter:none;background:#090a0b}
+  .orb-wrap{transform:none!important;filter:none;opacity:.12}
+  .orb{animation:none;box-shadow:inset -10px -12px 22px #0009,inset 6px 6px 12px #fff4}
+  .orb:after{filter:none}
+  .orb-shine{filter:none}
+  .ticker-track{animation-duration:65s}
+  .ticker{overflow:hidden}
+  .project-card,.round-link{transition:none}
+  .profile-avatar{box-shadow:0 6px 20px #0008}
+}
+@media(max-width:760px){
+  .topbar{position:relative}
+  nav{gap:clamp(10px,3vw,18px)}
+  nav a{font-size:9px;white-space:nowrap}
+  .hero{min-height:680px;min-height:min(820px,calc(100svh - 65px))}
+  .hero-copy{padding:56px 0 28px}
+  h1{font-size:clamp(52px,12.5vw,92px);letter-spacing:-.075em}
+  .hero-bottom{width:100%;max-width:360px}
+  .section-pad{padding:64px 6vw}
+  .about-grid{gap:28px;padding-top:34px}
+  .about-stamp{display:none}
+  .projects-heading{padding:36px 0 28px}
+  .project-card{padding:22px 0}
+  .project-card:hover{padding-left:0}
+  .manifesto{padding:56px 6vw 42px}
+  .manifesto-symbol{animation:none}
+  .contact-orbit{display:none}
+  .reveal{transition:opacity .35s ease,transform .35s ease}
+}
+@media(max-width:380px){
+  .brand{font-size:23px;letter-spacing:-1.5px}
+  nav{gap:8px}
+  nav a{font-size:8px}
+  .profile-avatar{width:54px;height:54px}
+  .profile-avatar-caption{font-size:7px}
+  .hero-meta{font-size:7px;letter-spacing:.04em}
+  h1{font-size:clamp(46px,12vw,58px)}
+  .project-card{grid-template-columns:24px minmax(0,1fr) 18px;gap:8px}
+  .project-main h3{font-size:22px}
+}
+@media(min-width:761px) and (max-width:1024px){
+  .orb-wrap{right:1%;width:34vw;opacity:.2}
+  .hero-copy{max-width:780px}
+  h1{font-size:clamp(78px,10vw,112px)}
+  .section-pad{padding-left:6vw;padding-right:6vw}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
