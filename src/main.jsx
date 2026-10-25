@@ -11,16 +11,41 @@ const projects = [
 function App() {
   useEffect(() => {
     const nodes = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
-    }), { threshold: 0.12 });
-    nodes.forEach(node => observer.observe(node));
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let observer;
+
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      nodes.forEach(node => node.classList.add('visible'));
+    } else {
+      observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px 40px 0px' });
+      nodes.forEach(node => observer.observe(node));
+    }
+
+    // Pointer parallax is desktop-only: avoid continuous work on touch devices.
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    let frame = 0;
     const move = (event) => {
-      document.documentElement.style.setProperty('--mx', ((event.clientX / window.innerWidth) - .5).toFixed(3));
-      document.documentElement.style.setProperty('--my', ((event.clientY / window.innerHeight) - .5).toFixed(3));
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        document.documentElement.style.setProperty('--mx', ((event.clientX / window.innerWidth) - .5).toFixed(2));
+        document.documentElement.style.setProperty('--my', ((event.clientY / window.innerHeight) - .5).toFixed(2));
+      });
     };
-    window.addEventListener('pointermove', move);
-    return () => { observer.disconnect(); window.removeEventListener('pointermove', move); };
+    if (finePointer && !reduceMotion) window.addEventListener('pointermove', move, { passive: true });
+
+    return () => {
+      if (observer) observer.disconnect();
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener('pointermove', move);
+    };
   }, []);
 
   return <main>
